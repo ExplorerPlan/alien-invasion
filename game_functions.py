@@ -66,7 +66,7 @@ def update_screen( ai_settings, screen, ship, aliens, bullets ):
     pg.display.flip()
 
 
-def update_bullets(bullets):
+def update_bullets(ai_settings, screen, ship, aliens, bullets):
     """update the positions of the bullets and delete vanished bullets"""
     # update the positions of bullets
     bullets.update()
@@ -75,6 +75,15 @@ def update_bullets(bullets):
     for bullet in bullets.copy():
         if bullet.rect.bottom < 1:
             bullets.remove( bullet )
+
+    # check if some bullet collide aliens
+    # if so, delete the bullet and the alien
+    collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
+
+    if len(aliens) == 0:
+        # delete current bullets and reset a new fleet of aliens
+        bullets.empty()
+        create_fleet(ai_settings, screen, ship, aliens)
 
 
 def create_fleet(ai_settings, screen, ship, aliens):
@@ -109,3 +118,24 @@ def get_number_rows(ai_settings, ship_height, alien_height):
     available_space_y = (ai_settings.screen_height - 3 * alien_height - ship_height)
     number_rows = int( available_space_y / (2 * alien_height) )
     return number_rows
+
+
+def update_aliens(ai_settings, aliens):
+    """update the positions of aliens"""
+    check_fleet_edges(ai_settings, aliens)
+    aliens.update()
+
+
+def check_fleet_edges(ai_settings, aliens):
+    """check if some alien touches edge"""
+    for alien in aliens.sprites():
+        if alien.check_edge():
+            change_fleet_direction(ai_settings, aliens)
+            break
+
+
+def change_fleet_direction(ai_settings, aliens):
+    """move the fleet lower and change their direction"""
+    for alien in aliens.sprites():
+        alien.rect.y += ai_settings.fleet_drop_speed
+    ai_settings.fleet_direction *= -1
