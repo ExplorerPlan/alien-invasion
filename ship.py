@@ -28,16 +28,16 @@ class Ship:
 
     def update(self):
         """respond to the events"""
-        if self.moving_right and self.rect.centerx < 931:
+        if self.moving_right and self.rect.centerx < 1251:
             self.centerx += self.ai_settings.ship_speed_factor
         if self.moving_left and self.rect.centerx > 29:
             self.centerx -= self.ai_settings.ship_speed_factor
         if self.moving_up and self.rect.centery > 24:
             self.centery -= self.ai_settings.ship_speed_factor
-        if self.moving_down and self.rect.centery < 516:
+        if self.moving_down and self.rect.centery < 696:
             self.centery += self.ai_settings.ship_speed_factor
         #update rect object with center value
-        self.rect.centerx = self.centerx;
+        self.rect.centerx = self.centerx
         self.rect.centery = self.centery
 
     def blitme(self):
