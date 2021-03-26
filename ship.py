@@ -43,3 +43,8 @@ class Ship:
     def blitme(self):
         """draw the ship at the specific position"""
         self.screen.blit(self.image, self.rect)
+
+    def center_ship( self ):
+        """put ship in the centre"""
+        self.centerx = self.screen_rect.centerx
+        self.centery = self.screen_rect.bottom - self.rect.height

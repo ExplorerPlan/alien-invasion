@@ -1,4 +1,5 @@
 import sys
+from time import sleep
 
 import pygame as pg
 from bullet import Bullet
@@ -75,11 +76,13 @@ def update_bullets(ai_settings, screen, ship, aliens, bullets):
     for bullet in bullets.copy():
         if bullet.rect.bottom < 1:
             bullets.remove( bullet )
+    check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets)
 
-    # check if some bullet collide aliens
+
+def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):
+    """ check if some bullet collide aliens"""
     # if so, delete the bullet and the alien
     collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
-
     if len(aliens) == 0:
         # delete current bullets and reset a new fleet of aliens
         bullets.empty()
@@ -120,10 +123,31 @@ def get_number_rows(ai_settings, ship_height, alien_height):
     return number_rows
 
 
-def update_aliens(ai_settings, aliens):
+def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
+    """respond to the ship hit by alien"""
+    # ship_left subtract 1
+    stats.ships_left -= 1
+
+    # clear the aliens and bullets
+    aliens.empty()
+    bullets.empty()
+
+    # create a new fleet of aliens and reset the ship
+    create_fleet(ai_settings, screen, ship, aliens)
+    ship.center_ship()
+
+    # pause
+    sleep(0.5)
+
+
+def update_aliens(ai_settings, stats, screen,  ship, aliens, bullets):
     """update the positions of aliens"""
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
+
+    # check the collisions between aliens and ship
+    if pg.sprite.spritecollideany(ship, aliens):
+        ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
 
 
 def check_fleet_edges(ai_settings, aliens):
