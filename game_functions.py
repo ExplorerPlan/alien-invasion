@@ -12,7 +12,7 @@ def fire_bullet( ai_settings, screen, ship, bullets ):
         bullets.add( new_bullet )
 
 
-def check_keydown_events(event, ai_settings, screen, ship, bullets ):
+def check_keydown_events(event, ai_settings, stats, screen, ship, bullets ):
     """respond to the keydown events"""
     if event.key == pg.K_RIGHT:
         ship.moving_right = True
@@ -23,7 +23,10 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets ):
     elif event.key == pg.K_DOWN:
         ship.moving_down = True
     elif event.key == pg.K_SPACE:
-        fire_bullet(ai_settings, screen, ship, bullets)
+        if stats.game_active:
+            fire_bullet(ai_settings, screen, ship, bullets)
+        else:
+            stats.game_active = True
     elif event.key == pg.K_q:
         sys.exit()
 
@@ -40,18 +43,27 @@ def check_keyup_events(event, ship):
         ship.moving_down = False
 
 
-def check_events(ai_settings, screen, ship, bullets ):
+def check_play_button(stats, play_button, mouse_x, mouse_y):
+    """when clicked Play, start game"""
+    if play_button.rect.collidepoint(mouse_x, mouse_y):
+        stats.game_active = True
+
+
+def check_events(ai_settings, screen, stats, play_button, ship, bullets ):
     """check clicks and mouse events"""
     for event in pg.event.get():
         if event.type == pg.QUIT:
             sys.exit()
         elif event.type == pg.KEYDOWN:
-            check_keydown_events(event, ai_settings, screen, ship, bullets)
+            check_keydown_events(event, ai_settings, stats, screen, ship, bullets)
         elif event.type == pg.KEYUP:
             check_keyup_events(event, ship)
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = pg.mouse.get_pos()
+            check_play_button(stats, play_button, mouse_x, mouse_y)
 
 
-def update_screen( ai_settings, screen, ship, aliens, bullets ):
+def update_screen( ai_settings, screen, stats, ship, aliens, bullets, play_button ):
     """update the image on the screen and switch to the new screen"""
     # redraw the screen every loop
     screen.fill(ai_settings.bg_color)
@@ -62,6 +74,10 @@ def update_screen( ai_settings, screen, ship, aliens, bullets ):
 
     ship.blitme()
     aliens.draw(screen)
+
+    # if not active, draw the button
+    if not stats.game_active:
+        play_button.draw_button()
 
     # make the screen visible
     pg.display.flip()
@@ -125,19 +141,22 @@ def get_number_rows(ai_settings, ship_height, alien_height):
 
 def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
     """respond to the ship hit by alien"""
-    # ship_left subtract 1
-    stats.ships_left -= 1
+    if stats.ships_left > 0:
+        # ship_left subtract 1
+        stats.ships_left -= 1
 
-    # clear the aliens and bullets
-    aliens.empty()
-    bullets.empty()
+        # clear the aliens and bullets
+        aliens.empty()
+        bullets.empty()
 
-    # create a new fleet of aliens and reset the ship
-    create_fleet(ai_settings, screen, ship, aliens)
-    ship.center_ship()
+        # create a new fleet of aliens and reset the ship
+        create_fleet(ai_settings, screen, ship, aliens)
+        ship.center_ship()
 
-    # pause
-    sleep(0.5)
+        # pause
+        sleep(0.5)
+    else:
+        stats.game_active = False
 
 
 def update_aliens(ai_settings, stats, screen,  ship, aliens, bullets):
@@ -148,6 +167,9 @@ def update_aliens(ai_settings, stats, screen,  ship, aliens, bullets):
     # check the collisions between aliens and ship
     if pg.sprite.spritecollideany(ship, aliens):
         ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+
+    """check aliens at bottom"""
+    check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets)
 
 
 def check_fleet_edges(ai_settings, aliens):
@@ -163,3 +185,12 @@ def change_fleet_direction(ai_settings, aliens):
     for alien in aliens.sprites():
         alien.rect.y += ai_settings.fleet_drop_speed
     ai_settings.fleet_direction *= -1
+
+
+def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
+    """check if there is alien at the bottom"""
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+            break
