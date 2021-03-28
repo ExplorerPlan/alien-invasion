@@ -3,10 +3,10 @@ from pygame.sprite import Group
 
 from settings import Settings
 from game_stats import GameStats
-from button import Button
+from src.button import Button
 from ship import Ship
 from scoreboard import Scoreboard
-import game_functions as gf
+from src import game_functions as gf
 
 
 def run_game():

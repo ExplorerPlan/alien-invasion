@@ -11,7 +11,7 @@ class Alien(Sprite):
         self.ai_settings = ai_settings
 
         # load the image of the alien and set its rect
-        self.image = pg.image.load('images/alien.bmp')
+        self.image = pg.image.load( 'images/alien.bmp' )
         self.rect = self.image.get_rect()
 
         # appear on the left top initially

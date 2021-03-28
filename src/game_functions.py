@@ -3,7 +3,7 @@ from time import sleep
 
 import pygame as pg
 from bullet import Bullet
-from alien import Alien
+from src.alien import Alien
 
 
 def start_game(ai_settings, stats, screen, ship, aliens, bullets, sb):
