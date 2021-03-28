@@ -52,32 +52,32 @@ def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets,
 
 def check_keydown_events(event, ai_settings, stats, screen, ship, aliens, bullets, sb ):
     """respond to the keydown events"""
-    if event.key == pg.K_RIGHT:
+    if event.key == pg.K_d:
         ship.moving_right = True
-    elif event.key == pg.K_LEFT:
+    elif event.key == pg.K_a:
         ship.moving_left = True
-    elif event.key == pg.K_UP:
+    elif event.key == pg.K_w:
         ship.moving_up = True
-    elif event.key == pg.K_DOWN:
+    elif event.key == pg.K_s:
         ship.moving_down = True
     elif event.key == pg.K_SPACE:
         if stats.game_active:
             fire_bullet(ai_settings, screen, ship, bullets)
         else:
             start_game(ai_settings, stats, screen, ship, aliens, bullets, sb)
-    elif event.key == pg.K_q:
+    elif event.key == pg.K_ESCAPE:
         sys.exit()
 
 
 def check_keyup_events(event, ship):
     """respond to the keyup events"""
-    if event.key == pg.K_RIGHT:
+    if event.key == pg.K_d:
         ship.moving_right = False
-    elif event.key == pg.K_LEFT:
+    elif event.key == pg.K_a:
         ship.moving_left = False
-    elif event.key == pg.K_UP:
+    elif event.key == pg.K_w:
         ship.moving_up = False
-    elif event.key == pg.K_DOWN:
+    elif event.key == pg.K_s:
         ship.moving_down = False
 
 
@@ -154,7 +154,7 @@ def create_fleet(ai_settings, screen, ship, aliens):
 def get_number_aliens_x(ai_settings, alien_width):
     """calculate the number of aliens per row"""
     available_space_x = ai_settings.screen_width - 2 * alien_width
-    number_aliens_x = int(available_space_x / ( 2 * alien_width))
+    number_aliens_x = int(available_space_x / ( 2 * alien_width)) + 1
     return number_aliens_x
 
 
@@ -171,7 +171,7 @@ def create_alien(ai_settings, screen, aliens, alien_number, row_number):
     alien_width = alien.rect.width
     alien.x = alien_width + 2 * alien_width * alien_number
     alien.rect.x = alien.x
-    alien.rect.y = alien.rect.height * row_number + 50
+    alien.rect.y = alien.rect.height * row_number + 35
     aliens.add( alien )
 
 
