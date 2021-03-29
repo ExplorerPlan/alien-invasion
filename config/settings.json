@@ -3,16 +3,21 @@
     "ObjName": "Screen",
     "ScreenWidth": "1280",
     "ScreenHeight": "720",
-    "Background_color": "(230, 230, 230)"
+    "BackgroundColor_R": "230",
+    "BackgroundColor_G": "230",
+    "BackgroundColor_B": "230"
   },
   {
-    "ObjName": "ship",
+    "ObjName": "Ship",
     "ShipLimit": "2"
   },
   {
     "ObjName": "Bullet",
     "BulletWidth": "3",
-    "BulletColor": "(60, 60, 60)",
+    "BulletHeight": "15",
+    "BulletColor_R": "60",
+    "BulletColor_G": "60",
+    "BulletColor_B": "60",
     "BulletAllowed": "3"
   },
   {

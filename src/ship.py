@@ -10,7 +10,7 @@ class Ship( Sprite ):
         self.ai_settings = ai_settings
 
         # load the image of the ship
-        self.image = pg.image.load( 'images/ship.bmp' )
+        self.image = pg.image.load( '../images/ship.bmp' )
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
 
