@@ -1,0 +1,35 @@
+[
+  {
+    "ObjName": "Screen",
+    "ScreenWidth": "1280",
+    "ScreenHeight": "720",
+    "Background_color": "(230, 230, 230)"
+  },
+  {
+    "ObjName": "ship",
+    "ShipLimit": "2"
+  },
+  {
+    "ObjName": "Bullet",
+    "BulletWidth": "3",
+    "BulletColor": "(60, 60, 60)",
+    "BulletAllowed": "3"
+  },
+  {
+    "ObjName": "Alien",
+    "FleetDropSpeed": "10"
+  },
+  {
+    "ObjName": "Scale",
+    "SpeedupScale": "1.1",
+    "ScoreScale": "1.1"
+  },
+  {
+    "ObjName": "DynamicSettings",
+    "ShipSpeedFactor": "1.5",
+    "BulletSpeedFactor": "3",
+    "AlienSpeedFactor": "1",
+    "FleetDirection": "1",
+    "AlienPoints": "10"
+  }
+]
