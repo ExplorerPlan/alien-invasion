@@ -207,6 +207,8 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets, sb):
     else:
         stats.game_active = False
         pg.mouse.set_visible(True)
+        sleep(1)
+        pg.event.get()
 
 
 def update_aliens(ai_settings, stats, screen,  ship, aliens, bullets, sb):
