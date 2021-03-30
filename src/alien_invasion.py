@@ -31,7 +31,7 @@ def run_game():
     gf.create_fleet(ai_settings, screen, ship, aliens)
 
     # create statics and scoreboard
-    stats = GameStats(ai_settings, "Normal")
+    stats = GameStats(ai_settings, "Hard")
     sb = Scoreboard(ai_settings, screen, stats)
 
     # begin the main loop of the game

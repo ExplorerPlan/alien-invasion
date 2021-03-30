@@ -1,8 +1,47 @@
 [
   {
-    "PlayerName": "AllUsers",
-    "PlayerCode": "0",
-    "Score": "0",
-    "Level": "0"
+    "GameMode": "Idiot",
+    "PlayerName": "None",
+    "Score": "0"
+  },
+  {
+    "GameMode": "Easy",
+    "PlayerName": "None",
+    "Score": "0"
+  },
+  {
+    "GameMode": "Normal",
+    "PlayerName": "None",
+    "Score": "0"
+  },
+  {
+    "GameMode": "Hard",
+    "PlayerName": "None",
+    "Score": "0"
+  },
+  {
+    "GameMode": "Hell",
+    "PlayerName": "None",
+    "Score": "0"
+  },
+  {
+    "GameMode": "Impossible",
+    "PlayerName": "None",
+    "Score": "0"
+  },
+  {
+    "GameMode": "Boss",
+    "PlayerName": "None",
+    "Score": "0"
+  },
+  {
+    "GameMode": "Bomb",
+    "PlayerName": "None",
+    "Score": "0"
+  },
+  {
+    "GameMode": "Dual",
+    "PlayerName": "None",
+    "Score": "0"
   }
 ]
