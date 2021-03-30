@@ -37,6 +37,13 @@ def fire_bullet( ai_settings, screen, ship, bullets ):
         bullets.add( new_bullet )
 
 
+def pause_game( stats ):
+    if stats.paused:
+        stats.paused = False
+    else:
+        stats.paused = True
+
+
 def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets, sb ):
     """check clicks and mouse events"""
     for event in pg.event.get():
@@ -66,6 +73,8 @@ def check_keydown_events(event, ai_settings, stats, screen, ship, aliens, bullet
             fire_bullet(ai_settings, screen, ship, bullets)
         else:
             start_game(ai_settings, stats, screen, ship, aliens, bullets, sb)
+    elif event.key == pg.K_p:
+        pause_game( stats)
     elif event.key == pg.K_ESCAPE:
         sys.exit()
 
@@ -213,7 +222,7 @@ def update_aliens(ai_settings, stats, screen,  ship, aliens, bullets, sb):
     check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets, sb)
 
 
-def update_screen( ai_settings, screen, stats, sb, ship, aliens, bullets, play_button ):
+def update_screen( ai_settings, screen, stats, sb, ship, aliens, bullets, play_button, continue_button ):
     """update the image on the screen and switch to the new screen"""
     # redraw the screen every loop
     screen.fill(ai_settings.bg_color)
@@ -232,6 +241,9 @@ def update_screen( ai_settings, screen, stats, sb, ship, aliens, bullets, play_b
     # if not active, draw the button
     if not stats.game_active:
         play_button.draw_button()
+
+    elif stats.paused:
+        continue_button.draw_button()
 
     # make the screen visible
     pg.display.flip()
